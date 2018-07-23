@@ -9,6 +9,7 @@ use Coinbase\Wallet\Resource\Account;
 use Coinbase\Wallet\Resource\Address;
 use Coinbase\Wallet\Resource\Application;
 use Coinbase\Wallet\Resource\BitcoinAddress;
+use Coinbase\Wallet\Resource\EthrereumAddress;
 use Coinbase\Wallet\Resource\Buy;
 use Coinbase\Wallet\Resource\Checkout;
 use Coinbase\Wallet\Resource\CurrentUser;
@@ -120,7 +121,7 @@ class Mapper
     {
         // validate
         $to = $transaction->getTo();
-        if ($to && !$to instanceof Email && !$to instanceof BitcoinAddress && !$to instanceof Account) {
+        if ($to && !$to instanceof Email && !$to instanceof BitcoinAddress && !$to instanceof Account && !$to instanceof EthrereumAddress) {
             throw new LogicException(
                 'The Coinbase API only accepts transactions to an account, email, or bitcoin address'
             );
@@ -707,6 +708,14 @@ class Mapper
             // bitcoin address
             return [
                 'resource' => ResourceType::BITCOIN_ADDRESS,
+                'address' => $value->getAddress(),
+            ];
+        }
+
+        if ($value instanceof EthrereumAddress) {
+            // bitcoin address
+            return [
+                'resource' => ResourceType::ETHEREUM_ADDRESS,
                 'address' => $value->getAddress(),
             ];
         }
