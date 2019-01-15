@@ -216,6 +216,11 @@ class Transaction extends Resource
         $this->to = new EthrereumAddress($address);
     }
 
+    public function setToBitcoinCashAddress($address)
+    {
+        $this->to = new BitcoinCashAddress($address);
+    }
+
     public function setToAccountId($accountId)
     {
         $this->to = Account::reference($accountId);
